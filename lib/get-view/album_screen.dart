@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +34,14 @@ class AlbumScreen extends GetView<AlbumController> {
           onEmpty: const Text('No data found'),
           // here also you can set your own error widget, but by
           // default will be an Center(child:Text(error))
-          onError: (error) => const Center(child: Text('error')),
+          onError: (error) {
+            log('error $error');
+            if (error != null && error.contains('SocketException')) {
+              return const Center(child: Text('No Internet Connection'));
+            }
+            return const Center(child: Text('error'));
+
+          },
         ));
   }
 }
